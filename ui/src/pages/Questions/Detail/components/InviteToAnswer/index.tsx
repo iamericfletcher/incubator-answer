@@ -134,7 +134,7 @@ const Index: FC<Props> = ({ questionId, readOnly = false }) => {
       <Card.Body>
         <div
           className={classNames(
-            'd-flex align-items-center flex-wrap',
+            'd-flex flex-column flex-wrap',
             editing ? 'm-n1' : ' mx-n2 my-n1',
           )}>
           {users?.map((user) => {

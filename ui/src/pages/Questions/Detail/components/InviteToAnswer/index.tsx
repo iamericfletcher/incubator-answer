@@ -18,7 +18,7 @@
  */
 
 import { memo, FC, useState, useEffect } from 'react';
-import { Card, Button, ToggleButton, ToggleButtonGroup } from 'react-bootstrap';
+import { Card, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
@@ -41,7 +41,6 @@ const Index: FC<Props> = ({ questionId, readOnly = false }) => {
     keyPrefix: 'invite_to_answer',
   });
   const MAX_ASK_NUMBER = 5;
-  const [checked, setChecked] = useState(false);
   const [editing, setEditing] = useState(false);
   const [users, setUsers] = useState<Type.UserInfoBase[]>();
   const iaCaptcha = useCaptchaModal('invitation_answer');
@@ -139,7 +138,7 @@ const Index: FC<Props> = ({ questionId, readOnly = false }) => {
             'd-flex flex-column flex-wrap',
             editing ? 'm-n1' : ' mx-n2 my-n1',
           )}>
-          {users?.map((user, idx) => {
+          {users?.map((user) => {
             if (editing) {
               return (
                 <Button
@@ -165,18 +164,17 @@ const Index: FC<Props> = ({ questionId, readOnly = false }) => {
             }
             return (
               <div className="d-flex">
-                <div className="test">
-                  <ToggleButtonGroup type="checkbox" defaultValue={[1]}>
-                    <ToggleButton
-                      id={`checkboxToggleBtn-${idx}`}
-                      type="checkbox"
-                      variant="outline-secondary"
-                      value="1"
-                      className="checkboxToggleBtn"
-                      checked={checked}
-                      onChange={(e) => setChecked(e.currentTarget.checked)}
-                    />
-                  </ToggleButtonGroup>
+                <div className="form-check">
+                  <input
+                    className="form-check-input"
+                    type="checkbox"
+                    value=""
+                    id="flexCheckDefault"
+                  />
+                  <label
+                    className="form-check-label"
+                    htmlFor="flexCheckDefualt"
+                  />
                 </div>
                 <Link
                   key={user.username}

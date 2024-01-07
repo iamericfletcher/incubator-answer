@@ -136,51 +136,37 @@ const Index: FC<Props> = ({
       onSelect={handleSelect}
       onKeyDown={handleKeyDown}
       onToggle={setToggleState}>
-      <Dropdown.Toggle
-        className="m-1 no-toggle"
-        size="sm"
-        variant="outline-secondary">
-        <span className="me-1">+</span>
-        {t('add')}
-      </Dropdown.Toggle>
-
-      <Dropdown.Menu show={toggleState}>
-        <Dropdown.Header className="px-2 py-0">
-          {toggleState ? (
-            <Form.Control
-              autoFocus
-              type="search"
-              placeholder={t('search')}
-              value={searchValue}
-              onChange={handleSearch}
-            />
-          ) : null}
-        </Dropdown.Header>
-        {peopleList.map((p, idx) => {
-          return (
-            <Dropdown.Item
-              key={p.username}
-              eventKey={idx}
-              active={idx === currentIndex}
-              className={idx === 0 ? 'mt-2' : ''}>
-              <div className="d-flex align-items-center text-nowrap">
-                <Avatar
-                  avatar={p.avatar}
-                  size="24"
-                  alt={p.display_name}
-                  className="rounded-1"
-                />
-                <div className="d-flex flex-wrap text-truncate">
-                  <span className="ms-2 text-truncate">{p.display_name}</span>
-                  <small className="text-secondary text-truncate ms-2">
-                    @{p.username}
-                  </small>
-                </div>
+      <Form.Control
+        autoFocus
+        type="search"
+        placeholder={t('search')}
+        value={searchValue}
+        onChange={handleSearch}
+      />
+      {peopleList.map((p, idx) => {
+        return (
+          <Dropdown.Item
+            key={p.username}
+            eventKey={idx}
+            active={idx === currentIndex}
+            className={idx === 0 ? 'mt-2' : ''}>
+            <div className="d-flex align-items-center text-nowrap">
+              <Avatar
+                avatar={p.avatar}
+                size="24"
+                alt={p.display_name}
+                className="rounded-1"
+              />
+              <div className="d-flex flex-wrap text-truncate">
+                <span className="ms-2 text-truncate">{p.display_name}</span>
+                <small className="text-secondary text-truncate ms-2">
+                  @{p.username}
+                </small>
               </div>
-            </Dropdown.Item>
-          );
-        })}
-      </Dropdown.Menu>
+            </div>
+          </Dropdown.Item>
+        );
+      })}
     </Dropdown>
   ) : null;
 };

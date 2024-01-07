@@ -18,7 +18,7 @@
  */
 
 import { memo, FC, useState, useEffect } from 'react';
-import { Card, Button } from 'react-bootstrap';
+import { Card, Button, ToggleButton } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
@@ -30,6 +30,7 @@ import type * as Type from '@/common/interface';
 import { useCaptchaModal } from '@/hooks';
 
 import PeopleDropdown from './PeopleDropdown';
+import './index.scss';
 
 interface Props {
   questionId: string;
@@ -162,18 +163,29 @@ const Index: FC<Props> = ({ questionId, readOnly = false }) => {
               );
             }
             return (
-              <Link
-                key={user.username}
-                to={`/users/${user.username}`}
-                className="mx-2 my-1 d-inline-flex flex-nowrap">
-                <Avatar
-                  avatar={user.avatar}
-                  size="24"
-                  alt={user.display_name}
-                  className="rounded-1"
-                />
-                <small className="ms-2">{user.display_name}</small>
-              </Link>
+              <div className="d-flex">
+                <div className="test">
+                  <ToggleButton
+                    id="toggle-check"
+                    type="checkbox"
+                    variant="outline-secondary"
+                    value="1"
+                    className="checkboxToggleBtn"
+                  />
+                </div>
+                <Link
+                  key={user.username}
+                  to={`/users/${user.username}`}
+                  className="mx-2">
+                  <Avatar
+                    avatar={user.avatar}
+                    size="24"
+                    alt={user.display_name}
+                    className="rounded-1"
+                  />
+                  <small className="ms-2">{user.display_name}</small>
+                </Link>
+              </div>
             );
           })}
           <PeopleDropdown

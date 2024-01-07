@@ -17,14 +17,9 @@
  * under the License.
  */
 
-.answer-item {
-  border-top: 1px solid rgba(33, 37, 41, 0.25);
-}
-
-@media screen and (max-width: 768px) {
-  .questionDetailPage {
-    h1.h3 {
-      font-size: calc(1.275rem + 0.3vw) !important;
-    }
-  }
+.checkboxToggleBtn {
+  padding: 0;
+  height:12px;
+  width:13px;
+  border-radius: 3px;
 }

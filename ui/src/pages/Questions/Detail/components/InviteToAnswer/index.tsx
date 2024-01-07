@@ -40,7 +40,7 @@ const Index: FC<Props> = ({ questionId, readOnly = false }) => {
   const { t } = useTranslation('translation', {
     keyPrefix: 'invite_to_answer',
   });
-  const MAX_ASK_NUMBER = 5;
+  // const MAX_ASK_NUMBER = 5;
   const [editing, setEditing] = useState(false);
   const [users, setUsers] = useState<Type.UserInfoBase[]>();
   const iaCaptcha = useCaptchaModal('invitation_answer');
@@ -103,10 +103,9 @@ const Index: FC<Props> = ({ questionId, readOnly = false }) => {
     initInviteUsers();
   }, [questionId]);
 
-  const showAddButton = editing && (!users || users.length < MAX_ASK_NUMBER);
   const showInviteFeat = !editing && users?.length === 0;
-  const showInviteButton = showInviteFeat && !readOnly;
-  const showEditButton = !readOnly && !editing && users?.length;
+  // const showEditButton = !readOnly && !editing && users?.length;
+  const showEditButton = true;
   const showSaveButton = !readOnly && editing;
   const showEmpty = readOnly && users?.length === 0;
 
@@ -138,6 +137,12 @@ const Index: FC<Props> = ({ questionId, readOnly = false }) => {
             'd-flex flex-column flex-wrap',
             editing ? 'm-n1' : ' mx-n2 my-n1',
           )}>
+          {editing ? (
+            <PeopleDropdown
+              selectedPeople={users}
+              onSelect={updateInviteUsers}
+            />
+          ) : null}
           {users?.map((user) => {
             if (editing) {
               return (
@@ -145,7 +150,19 @@ const Index: FC<Props> = ({ questionId, readOnly = false }) => {
                   key={user.username}
                   className="m-1 d-inline-flex flex-nowrap"
                   size="sm"
-                  variant="outline-secondary">
+                  variant="">
+                  <div className="d-flex form-check">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      value=""
+                      id="flexCheckDefault"
+                    />
+                    <label
+                      className="form-check-label"
+                      htmlFor="flexCheckDefualt"
+                    />
+                  </div>
                   <Avatar
                     avatar={user.avatar}
                     size="20"
@@ -163,52 +180,44 @@ const Index: FC<Props> = ({ questionId, readOnly = false }) => {
               );
             }
             return (
-              <div className="d-flex">
-                <div className="form-check">
-                  <input
-                    className="form-check-input"
-                    type="checkbox"
-                    value=""
-                    id="flexCheckDefault"
-                  />
-                  <label
-                    className="form-check-label"
-                    htmlFor="flexCheckDefualt"
-                  />
+              <>
+                <PeopleDropdown
+                  selectedPeople={users}
+                  onSelect={updateInviteUsers}
+                />
+                <div className="d-flex mt-2">
+                  <div className="d-flex form-check">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      value=""
+                      id="flexCheckDefault"
+                    />
+                    <label
+                      className="form-check-label"
+                      htmlFor="flexCheckDefualt"
+                    />
+                  </div>
+                  <Link key={user.username} to={`/users/${user.username}`}>
+                    <Avatar
+                      avatar={user.avatar}
+                      size="24"
+                      alt={user.display_name}
+                      className="rounded-1"
+                    />
+                    <small className="ms-2">{user.display_name}</small>
+                  </Link>
                 </div>
-                <Link
-                  key={user.username}
-                  to={`/users/${user.username}`}
-                  className="mx-2">
-                  <Avatar
-                    avatar={user.avatar}
-                    size="24"
-                    alt={user.display_name}
-                    className="rounded-1"
-                  />
-                  <small className="ms-2">{user.display_name}</small>
-                </Link>
-              </div>
+              </>
             );
           })}
-          <PeopleDropdown
-            visible={showAddButton}
-            selectedPeople={users}
-            onSelect={updateInviteUsers}
-          />
         </div>
         {showInviteFeat ? (
           <>
-            <div className="text-muted">{t('desc')}</div>
-            {showInviteButton ? (
-              <Button
-                size="sm"
-                variant="outline-primary"
-                className="mt-3"
-                onClick={() => setEditing(true)}>
-                {t('invite')}
-              </Button>
-            ) : null}
+            {/* <div className="text-muted">{t('desc')}</div> */}
+            <div className="text-muted">
+              Select people who you think might know the answer
+            </div>
           </>
         ) : null}
       </Card.Body>

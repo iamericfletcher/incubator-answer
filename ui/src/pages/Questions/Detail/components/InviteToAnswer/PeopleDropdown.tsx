@@ -30,14 +30,9 @@ import './PeopleDropdown.scss';
 interface Props {
   selectedPeople: Type.UserInfoBase[] | undefined;
   onSelect: (people: Type.UserInfoBase) => void;
-  visible?: boolean;
 }
 
-const Index: FC<Props> = ({
-  selectedPeople = [],
-  visible = false,
-  onSelect,
-}) => {
+const Index: FC<Props> = ({ selectedPeople = [], onSelect }) => {
   const { user: currentUser } = loggedUserInfoStore();
   const { t } = useTranslation('translation', {
     keyPrefix: 'invite_to_answer',
@@ -47,9 +42,6 @@ const Index: FC<Props> = ({
   const [currentIndex, setCurrentIndex] = useState(0);
   const [searchValue, setSearchValue] = useState('');
   const filterAndSetPeople = (source) => {
-    if (!toggleState) {
-      return;
-    }
     const filteredPeople: Type.UserInfoBase[] = [];
     source.forEach((p) => {
       if (currentUser && currentUser.username === p.username) {
@@ -124,15 +116,9 @@ const Index: FC<Props> = ({
     searchPeople(searchValue);
   }, [toggleState]);
 
-  useEffect(() => {
-    if (!visible && toggleState) {
-      setToggleState(false);
-    }
-  }, [visible]);
-
-  return visible ? (
+  return (
     <Dropdown
-      className="d-inline-flex people-dropdown"
+      className="d-flex flex-column people-dropdown"
       onSelect={handleSelect}
       onKeyDown={handleKeyDown}
       onToggle={setToggleState}>
@@ -168,7 +154,7 @@ const Index: FC<Props> = ({
         );
       })}
     </Dropdown>
-  ) : null;
+  );
 };
 
 export default Index;

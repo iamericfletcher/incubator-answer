@@ -17,9 +17,6 @@
  * under the License.
  */
 
-.checkboxToggleBtn {
-  padding: 0;
-  height:12px;
-  width:13px;
-  border-radius: 3px;
+.form-check-input:focus {
+  box-shadow: none !important;
 }

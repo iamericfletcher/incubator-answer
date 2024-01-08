@@ -65,6 +65,7 @@ const Index: FC<Props> = ({ questionId, readOnly = false }) => {
     if (users?.length) {
       userList = [...users, user];
     }
+    console.log(userList);
     setUsers(userList);
   };
 
@@ -105,7 +106,7 @@ const Index: FC<Props> = ({ questionId, readOnly = false }) => {
 
   const showInviteFeat = !editing && users?.length === 0;
   // const showEditButton = !readOnly && !editing && users?.length;
-  const showEditButton = true;
+  // const showEditButton = true;
   const showSaveButton = !readOnly && editing;
   const showEmpty = readOnly && users?.length === 0;
 
@@ -122,7 +123,7 @@ const Index: FC<Props> = ({ questionId, readOnly = false }) => {
             {t('save', { keyPrefix: 'btns' })}
           </Button>
         ) : null}
-        {showEditButton ? (
+        {!users?.length ? (
           <Button
             onClick={() => setEditing(true)}
             variant="link"
@@ -137,7 +138,7 @@ const Index: FC<Props> = ({ questionId, readOnly = false }) => {
             'd-flex flex-column flex-wrap',
             editing ? 'm-n1' : ' mx-n2 my-n1',
           )}>
-          {editing ? (
+          {editing || users?.length ? (
             <PeopleDropdown
               selectedPeople={users}
               onSelect={updateInviteUsers}
@@ -180,35 +181,29 @@ const Index: FC<Props> = ({ questionId, readOnly = false }) => {
               );
             }
             return (
-              <>
-                <PeopleDropdown
-                  selectedPeople={users}
-                  onSelect={updateInviteUsers}
-                />
-                <div className="d-flex mt-2">
-                  <div className="d-flex form-check">
-                    <input
-                      className="form-check-input"
-                      type="checkbox"
-                      value=""
-                      id="flexCheckDefault"
-                    />
-                    <label
-                      className="form-check-label"
-                      htmlFor="flexCheckDefualt"
-                    />
-                  </div>
-                  <Link key={user.username} to={`/users/${user.username}`}>
-                    <Avatar
-                      avatar={user.avatar}
-                      size="24"
-                      alt={user.display_name}
-                      className="rounded-1"
-                    />
-                    <small className="ms-2">{user.display_name}</small>
-                  </Link>
+              <div className="d-flex mt-2">
+                <div className="d-flex form-check">
+                  <input
+                    className="form-check-input"
+                    type="checkbox"
+                    value=""
+                    id="flexCheckDefault"
+                  />
+                  <label
+                    className="form-check-label"
+                    htmlFor="flexCheckDefualt"
+                  />
                 </div>
-              </>
+                <Link key={user.username} to={`/users/${user.username}`}>
+                  <Avatar
+                    avatar={user.avatar}
+                    size="24"
+                    alt={user.display_name}
+                    className="rounded-1"
+                  />
+                  <small className="ms-2">{user.display_name}</small>
+                </Link>
+              </div>
             );
           })}
         </div>

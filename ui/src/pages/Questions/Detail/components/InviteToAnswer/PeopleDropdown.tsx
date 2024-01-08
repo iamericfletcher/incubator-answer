@@ -41,6 +41,12 @@ const Index: FC<Props> = ({ selectedPeople = [], onSelect }) => {
   const [peopleList, setPeopleList] = useState<Type.UserInfoBase[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [searchValue, setSearchValue] = useState('');
+  const [isChecked, setIsChecked] = useState(false);
+  const handleCheckboxChange = (idx) => {
+    console.log(idx);
+    setIsChecked(!isChecked);
+  };
+
   const filterAndSetPeople = (source) => {
     const filteredPeople: Type.UserInfoBase[] = [];
     source.forEach((p) => {
@@ -71,9 +77,9 @@ const Index: FC<Props> = ({ selectedPeople = [], onSelect }) => {
   };
 
   const resetSearch = () => {
-    setCurrentIndex(0);
-    setSearchValue('');
-    setPeopleList([]);
+    // setCurrentIndex(0);
+    // setSearchValue('');
+    // setPeopleList([]);
   };
 
   const handleSelect = (idx) => {
@@ -82,6 +88,7 @@ const Index: FC<Props> = ({ selectedPeople = [], onSelect }) => {
     }
     const people = peopleList[idx];
     if (people) {
+      handleCheckboxChange(idx);
       onSelect(people);
     }
 
@@ -108,9 +115,9 @@ const Index: FC<Props> = ({ selectedPeople = [], onSelect }) => {
     }
   };
 
-  useEffect(() => {
-    filterAndSetPeople(peopleList);
-  }, [selectedPeople]);
+  // useEffect(() => {
+  //   filterAndSetPeople(peopleList);
+  // }, [selectedPeople]);
 
   useEffect(() => {
     searchPeople(searchValue);
@@ -136,7 +143,20 @@ const Index: FC<Props> = ({ selectedPeople = [], onSelect }) => {
             eventKey={idx}
             active={idx === currentIndex}
             className={idx === 0 ? 'mt-2' : ''}>
-            <div className="d-flex align-items-center text-nowrap">
+            <div className="d-flex text-nowrap">
+              <div className="d-flex form-check">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  value=""
+                  id={`flexCheckDefault-${idx}`}
+                  checked={isChecked}
+                />
+                <label
+                  className="form-check-label"
+                  htmlFor="flexCheckDefualt"
+                />
+              </div>
               <Avatar
                 avatar={p.avatar}
                 size="24"
